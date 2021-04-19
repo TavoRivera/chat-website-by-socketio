@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chat</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body class="text-center">
+    <div class="chatwindow">
+        <h2>Flack</h2>
+        <h2>Channel: {{session['room']}}</h2><br>
+        <h3>Active: {{session['username']}}</h3>
+        <textarea name="chat" id="chat" cols="70" rows="10" placeholder="Bienvenido a flack"></textarea><br><br>
+        <input type="text" id="text" size="60" placeholder="Escribe tu mensaje aquí">
+        <button type="button" id="send" class="btn btn-success">enviar</button><br><br>
+        <center> <button type="button" class="btn btn-danger"><a href="/logout">Abandonar</a></button></center>
+    </div>
+    
+</body>
+</html>
