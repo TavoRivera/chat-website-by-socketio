@@ -1,51 +1,92 @@
 import os
 import requests
+from collections import deque
 
 from flask import Flask, jsonify, session, render_template, redirect, request, url_for
 from flask_socketio import SocketIO, emit, send, join_room, leave_room
 from flask_session import Session
+
+from helpers import login_required
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = 'secret'
 app.config['SESSION_TYPE'] = 'filesystem'
 socketio = SocketIO(app)
 
+socketio = SocketIO(app, cors_allowed_origin="*")
 
-@app.route("/", methods=['GET', 'POST'])
+users = []
+channels = []
+mensajes = dict()
+
+
+@app.route("/")
+@login_required
 def index():
-    return render_template('index.html')
+    return render_template('index.html', channels=channels)
 
 
-@app.route("/chat", methods=['GET', 'POST'])
-def chat():
-    if (request.method == 'POST'):
-        username = request.form.get('username')
-        channel = request.form.get('channel')
-        # almacenar la info en session
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+
+    session.clear()
+
+    username = request.form.get("username")
+    if request.method == "POST":
+        if username in users:
+            return "username already exists"
+        users.append(username)
         session['username'] = username
-        session['room'] = channel
-        return render_template("chat.html", session=session)
+        # Remember the user session on a cookie if the browser is closed.
+        session.permanent = True
+
+        return redirect("/")
     else:
-        if (session.get('username') is not None):
-            return render_template("chat.html", session=session)
-        else:
-            return redirect(url_for('index'))
+        return render_template("login.html")
 
 
 @app.route("/logout")
 def logout():
     """Log user out"""
-
+    usuario = session['username']
     # Forget any user_id
     session.clear()
 
+    try:
+        users.remove(f"{usuario}")
+    except ValueError:
+        pass
     # Redirect user to login form
     return redirect("/")
 
-@socketio.on('message')
-def message(data):
-    print(f"\n\n{data}\n\n")
-    send(data)
+
+@app.route("/create", methods=['POST'])
+def create():
+
+    # obtener el nombre del canal desde el formulario
+    newchannel = request.form.get("channel")
+
+    if newchannel in channels:
+        return ("that channel already exists!")
+
+    # Agregar el canal a la lista global e canales
+    channels.append(newchannel)
+
+    #mensajes[newchannel] = deque()
+
+    return redirect("/" + newchannel)
+
+
+@app.route("/<canal>")
+def canal(canal):
+
+    return render_template('channel.html', channels=channels, canal=canal)
+
+
+@socketio.on("submit mensaje")
+def vote(data):
+    mensaje = data["mensaje"]
+    emit("announce mensaje", {"mensaje": mensaje}, broadcast=True)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/css/main.css') }}">
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js" integrity="sha384-LzhRnpGmQP+lOvWruF/lgkcqD+WDVt9fU3H4BWmwP5u5LTmkUGafMcpZKNObVMLU" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">FLACK</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarScroll"
+            aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        {% if session.username %}
+        <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav mr-auto my-2 my-lg-0 navbar-nav-scroll" style="max-height: 100px;">
+                <li class="nav-item active">
+                    <a id="newChannel" class="nav-link" href="/">Crear canal <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
+                        data-toggle="dropdown" aria-expanded="false">
+                        Selecciona un canal:
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        {% for channel in channels %}
+                        <a class="dropdown-item" href="/{{ channel }}">{{ channel }}</a>
+                        {% endfor %}
+                        <!--toma la ruta con el nombre del canal ojoo-->
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a id="logout" class="nav-link" href="/logout">Cerrar sesión</a>
+                </li>
+            </ul>
+        </div>
+        {% endif %}
+    </nav>
+
+    <section class="container p-5">
+         {% block content %}{% endblock %}
+    </section>
+
+
+<footer class="text-center mt-3">
+    <div>
+        <h6 class=footer-content> Project2 by Octavio Rivera - CS50W - All Rigths Reserved © 2021</h6>
+    </div>
+    <div class="redes-container">
+        <div class="row">
+            <ul class="col-12">
+                <li><a href="https://www.facebook.com/ImPhenomenal21/" class="facebook"><i
+                            class="bi bi-facebook"></i></a></li>
+                <li><a href="https://www.instagram.com/octavionoe/" class="instagram"><i
+                            class="bi bi-instagram"></i></a></li>
+                <li><a href="https://github.com/TavoRivera" class="GitHub"><i class="bi bi-github"></i></a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+</body>
+
+</html>
