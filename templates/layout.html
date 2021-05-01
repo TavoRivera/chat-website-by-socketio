@@ -37,7 +37,6 @@
                         {% for channel in channels %}
                         <a class="dropdown-item" href="/{{ channel }}">{{ channel }}</a>
                         {% endfor %}
-                        <!--toma la ruta con el nombre del canal ojoo-->
                     </div>
                 </li>
                 <li class="nav-item">
@@ -47,6 +46,7 @@
         </div>
         {% endif %}
     </nav>
+
 
     <section class="container p-5">
          {% block content %}{% endblock %}

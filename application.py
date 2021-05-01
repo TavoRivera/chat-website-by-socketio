@@ -86,7 +86,9 @@ def canal(canal):
 @socketio.on("submit mensaje")
 def vote(data):
     mensaje = data["mensaje"]
-    emit("announce mensaje", {"mensaje": mensaje}, broadcast=True)
+    emit("announce mensaje", {
+        "user": session.get("username"),
+        "mensaje": mensaje}, broadcast=True)
 
 
 if __name__ == '__main__':

@@ -17,9 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
       
        document.querySelector('#new-task').onsubmit = () => {
 
-      
             const mensaje = document.querySelector('#task').value;
-        
+            // Add new item to task list
+            // document.querySelector('#tasks').append(li);
 
             // Clear input field and disable button again
             document.querySelector('#task').value = '';
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
         socket.on('announce mensaje', data => {
         const li = document.createElement('li');
-        li.innerHTML = `mensaje: ${data.mensaje}`;
+        li.innerHTML = `<b>${data.user}:</b> ${data.mensaje}`;
         document.querySelector('#tasks').append(li);
     });
 
