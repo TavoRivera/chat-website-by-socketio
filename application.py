@@ -1,6 +1,7 @@
 import os
 import requests
 from collections import deque
+from time import localtime, asctime
 
 from flask import Flask, jsonify, session, render_template, redirect, request, url_for
 from flask_socketio import SocketIO, emit, send, join_room, leave_room
@@ -17,7 +18,7 @@ socketio = SocketIO(app, cors_allowed_origin="*")
 
 users = []
 channels = []
-mensajes = dict()
+canalmensajes = dict()
 
 
 @app.route("/")
@@ -72,23 +73,31 @@ def create():
     # Agregar el canal a la lista global e canales
     channels.append(newchannel)
 
-    #mensajes[newchannel] = deque()
+    canalmensajes[newchannel] = deque()
 
     return redirect("/" + newchannel)
 
 
 @app.route("/<canal>")
 def canal(canal):
+    session['canal'] = canal
 
-    return render_template('channel.html', channels=channels, canal=canal)
+    return render_template('channel.html', channels=channels, canal=canal, mensajes=canalmensajes[canal])
 
 
 @socketio.on("submit mensaje")
-def vote(data):
+def msg(data):
+    canal = session.get('canal')
     mensaje = data["mensaje"]
+    tiempo = asctime(localtime())
+
+    canalmensajes[canal].append([session.get('username'), mensaje, tiempo])
+
     emit("announce mensaje", {
         "user": session.get("username"),
-        "mensaje": mensaje}, broadcast=True)
+        "mensaje": mensaje,
+        "tiempo": tiempo},
+        broadcast=True)
 
 
 if __name__ == '__main__':

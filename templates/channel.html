@@ -11,8 +11,16 @@ Estás en {{canal}}
 
     <div class="container mt-5">
         <h1>Tasks</h1>
+        {%- if not messages -%}
+        {%- for mensaje in mensajes -%}
+        <li><b>{{ mensaje[0] }}:</b> {{ mensaje[1] }} {{'\n'}} --- {{ mensaje[2]}}</li>
+        {%- endfor -%}
+        {{ '----- These are old messages -----' }}{{- '\n' -}}
+        {%- endif -%}
         <ul id="tasks">
         </ul>
+
+               
         <form id="new-task">
             <input id="task" autocomplete="off" autofocus placeholder="New Task" type="text">
             <input id="submit" type="submit">
