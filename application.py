@@ -19,6 +19,7 @@ socketio = SocketIO(app, cors_allowed_origin="*")
 users = []
 channels = []
 canalmensajes = dict()
+canalmensajes["general"] = []
 
 
 @app.route("/")
@@ -85,11 +86,23 @@ def canal(canal):
     return render_template('channel.html', channels=channels, canal=canal, mensajes=canalmensajes[canal])
 
 
+@socketio.on('join')
+def on_join():
+    username = session.get('username')
+    room = session.get('canal')
+    print("_---------------entra")
+    join_room(room)
+    emit('joined', {
+        "mensaje": username + " ha entrado a la sala de chat"},
+        room=room)
+
+
 @socketio.on("submit mensaje")
 def msg(data):
     canal = session.get('canal')
     mensaje = data["mensaje"]
     tiempo = asctime(localtime())
+    room = session.get('canal')
 
     canalmensajes[canal].append([session.get('username'), mensaje, tiempo])
 
@@ -97,7 +110,7 @@ def msg(data):
         "user": session.get("username"),
         "mensaje": mensaje,
         "tiempo": tiempo},
-        broadcast=True)
+        room=room)
 
 
 if __name__ == '__main__':

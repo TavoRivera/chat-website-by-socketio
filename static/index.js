@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
 // conectar al web socket
-  var socket = io.connect('http://' + document.domain + ':' + location.port);
+  var socket = io.connect(location.protocol+'//' + document.domain + ':' + location.port);
     socket.on('connect', () => {
         // notifica al servidor una nueva conexión
-     // socket.emit('conectado');
+        socket.emit('join');
       
         document.querySelector('#submit').disabled = true;
 
@@ -28,8 +28,15 @@ document.addEventListener('DOMContentLoaded', () => {
         };       
 
     });
+
+    socket.on('joined', data => {
+        const li = document.createElement('li');
+        li.innerHTML = `<b>${data.mensaje}`;
+        document.querySelector('#tasks').append(li);
+        console.log("aca si");
+    });
   
-        socket.on('announce mensaje', data => {
+    socket.on('announce mensaje', data => {
         const li = document.createElement('li');
         li.innerHTML = `<b>${data.user}:</b> ${data.mensaje} --- ${data.tiempo} `;
         document.querySelector('#tasks').append(li);
