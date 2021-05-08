@@ -79,9 +79,70 @@ footer {
 	background: linear-gradient(to right, #f0cb35, #c02425);
 	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
+.list {
+	list-style: none;
+}
 
+/* forms*/
+.form {
+	width: 100%;
+	max-width: 330px;
+	padding: 15px;
+	margin: auto;
+	text-align: center;
+}
 
-
-
+/* chat box section*/
+.chat-box {
+	justify-content: center;
+	width: 100%;
+	height: 450px;
+	background-color: rgb(155, 188, 248);
+	overflow: hidden;
+	border-radius: 10px;
+	position: relative;
+}
+.client {
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	height: 80px;
+	background-color: chocolate;
+	padding: 15px;
+}
+.client-info {
+	color: cornsilk;
+}
+.client-info p {
+	color: rgb(25, 218, 25);
+	font-weight: lighter;
+}
+.chats {
+	width: 100%;
+	padding: 0 15px;
+	color: white;
+	position: relative;
+	font-size: 0.9em;
+	height: 300px;
+	overflow-y: scroll;
+}
+.client-chat {
+	list-style: none;
+	width: 60%;
+	word-wrap: break-word;
+	background-color: rgb(91, 97, 97);
+	padding: 7px 10px;
+	border-radius: 10px 10px 10px 0;
+	margin: 10px 0;
+}
+.my-chat {
+	list-style: none;
+	width: 60%;
+	word-wrap: break-word;
+	background-color: chocolate;
+	padding: 7px 10px;
+	border-radius: 10px 10px 0 10px;
+	margin: 5px 0 5px auto;
+}
 
 /*# sourceMappingURL=main.css.map */

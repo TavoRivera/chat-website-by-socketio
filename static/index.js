@@ -28,18 +28,38 @@ document.addEventListener('DOMContentLoaded', () => {
         };       
 
     });
+ 
+
+
+
+    $('#submit').on('click',function()
+    {
+        //Fijo el scroll al fondo usando añadiendo una animación (animate)
+        $(".chats").animate({ scrollTop: $('.chats').prop("scrollHeight")}, 800);
+    });
 
     socket.on('joined', data => {
         const li = document.createElement('li');
+        li.className = 'list'
         li.innerHTML = `<b>${data.mensaje}`;
         document.querySelector('#tasks').append(li);
         console.log("aca si");
     });
   
     socket.on('announce mensaje', data => {
+        let local = localStorage.getItem("localuser")
+        console.log(local)
         const li = document.createElement('li');
+        if (data.user != local) {
+            li.className = 'client-chat'
+        }  
+        else {
+            li.className = 'my-chat'
+        }
+            
         li.innerHTML = `<b>${data.user}:</b> ${data.mensaje} --- ${data.tiempo} `;
         document.querySelector('#tasks').append(li);
+        $(".chats").animate({ scrollTop: $('.chats').prop("scrollHeight")}, 800);
     });
 
 });   

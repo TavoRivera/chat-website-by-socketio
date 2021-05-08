@@ -8,13 +8,25 @@ login
 {% block content %}
 
     <h2>Inicia sesión</h2>
-    <form class="form-signin" method="POST">
+    <form id="form-signin" class="form" method="POST">
         <div class="form-group">
             <input type="text" class="form-control username" id="username" name="username"
                 placeholder="Type here your username" autocomplete="off" required>
         </div>
         <input type="submit" class="btn btn-primary" value="comienza a chatear">
     </form>
+
+    <script>
+        document.querySelector('#form-signin').onsubmit = () => {
+
+                const user = document.querySelector('#username').value;
+
+                localStorage.setItem("localuser", user)
+
+                // Stop form from submitting
+                
+            };
+    </script>
     
     
 {% endblock %}

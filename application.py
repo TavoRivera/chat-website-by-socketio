@@ -74,7 +74,7 @@ def create():
     # Agregar el canal a la lista global e canales
     channels.append(newchannel)
 
-    canalmensajes[newchannel] = deque()
+    canalmensajes[newchannel] = deque(maxlen=100)
 
     return redirect("/" + newchannel)
 

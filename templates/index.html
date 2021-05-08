@@ -9,10 +9,10 @@ Crea o unete a un canal
 
         <h1>Bienvenido a Flack {{session['username']}}!</h1>
 
-     <h3 class="mb-5">Selecciona un canal existente en la barra de navegación o crea un nuevo canal</h3>
+     <p class="mb-5">Selecciona un canal existente en la barra de navegación o crea un nuevo canal</p>
 
     <form action="/create" method="post" id="new-channel">
-        <div class="form-group">
+        <div class="form form-group">
             <input type="text" class="form-control" name="channel" id="channel" autofocus>
         </div>
         <button class="btn btn-primary" id="submitchannel" type="submit">Create</button>
