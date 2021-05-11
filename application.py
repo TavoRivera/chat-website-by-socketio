@@ -82,14 +82,14 @@ def create():
 
 @app.route("/<canal>")
 def canal(canal):
-    session['canal'] = canal     
+    session['canal'] = canal
 
     return render_template('channel.html', channels=channels, activos=users, canal=canal, mensajes=canalmensajes[canal])
 
 
 @socketio.on('join')
-def on_join():
-    username = session.get('username')
+def on_join(data):
+    username = data['username']
     room = session.get('canal')
     print("_---------------entra")
     join_room(room)

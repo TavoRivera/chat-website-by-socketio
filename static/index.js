@@ -3,7 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
   var socket = io.connect(location.protocol+'//' + document.domain + ':' + location.port);
     socket.on('connect', () => {
         // notifica al servidor una nueva conexión
-        socket.emit('join');
+        let local = localStorage.getItem("localuser")
+        socket.emit('join', {'username': local});
         
         document.querySelector('#submit').disabled = true;
 
