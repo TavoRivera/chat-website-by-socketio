@@ -41,6 +41,19 @@
                         {% endfor %}
                     </div>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-toggle="dropdown"
+                        aria-expanded="false">
+                        Usuarios Activos:
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        {% for users in activos %}
+                        {% if users != session.username %}
+                        <a class="dropdown-item activos" href="#">{{ users }}</a>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </li>
                 <li class="nav-item">
                     <a id="logout" class="nav-link" href="/logout">Cerrar sesión</a>
                 </li>
