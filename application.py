@@ -12,9 +12,8 @@ from helpers import login_required
 app = Flask(__name__)
 app.config["SECRET_KEY"] = 'secret'
 app.config['SESSION_TYPE'] = 'filesystem'
-socketio = SocketIO(app)
 
-socketio = SocketIO(app, cors_allowed_origin="*")
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 users = []
 channels = []

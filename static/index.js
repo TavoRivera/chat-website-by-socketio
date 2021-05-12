@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $('#submit').on('click',function()
     {
         //Fijo el scroll al fondo usando añadiendo una animación (animate)
-        $(".chats").animate({ scrollTop: $('.chats').prop("scrollHeight")}, 800);
+        $(".chats").animate({ scrollTop: $('.chats').prop("scrollHeight")}, 600);
     });
 
     // cuando se detecte una conexión, notificar en la sala que ese usuario ha ingresado
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         li.innerHTML = `<b>${data.user}:</b> ${data.mensaje} --- ${data.tiempo} `;
         document.querySelector('#tasks').append(li);
         // agrega animación por cada chat enviado por otra persona
-        $(".chats").animate({ scrollTop: $('.chats').prop("scrollHeight")}, 800);
+        $(".chats").animate({ scrollTop: $('.chats').prop("scrollHeight")}, 600);
     });
 
 });   
