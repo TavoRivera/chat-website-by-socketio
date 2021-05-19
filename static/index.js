@@ -3,9 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
   var socket = io.connect(location.protocol+'//' + document.domain + ':' + location.port);
     socket.on('connect', () => {
         // notifica al servidor una nueva conexión
-        let local = localStorage.getItem("localuser")
+        let local = localStorage.getItem("localuser");
+        console.log(local);
         socket.emit('join', {'username': local});
-        
+
         document.querySelector('#submit').disabled = true;
 
         // habilita el botón solo si hay texto en el campo de entrada
@@ -15,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
             else
                 document.querySelector('#submit').disabled = true;
         };
-        
+
         // toma el valor de entrada en el input del mensaje cuando se suba
         document.querySelector('#new-task').onsubmit = () => {
 
@@ -28,15 +29,15 @@ document.addEventListener('DOMContentLoaded', () => {
             // Stop form from submitting
             return false;
         };
-        
+
     });
- 
+
 
         // la animación se ejecuta por cada submit de mensajes
     $('#submit').on('click',function()
     {
         //Fijo el scroll al fondo usando añadiendo una animación (animate)
-        $(".chats").animate({ scrollTop: $('.chats').prop("scrollHeight")}, 600);
+        $(".chats").animate({ scrollTop: $('.chats').prop("scrollHeight")}, 800);
     });
 
     // cuando se detecte una conexión, notificar en la sala que ese usuario ha ingresado
@@ -48,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("aca si");
         localStorage.setItem('last_channel', data.canal)
     });
-        
+
 
   // recibe los datos desde el servidor para luego imprimirlos dentro de una etiqueta li a continuación creada
     socket.on('announce mensaje', data => {
@@ -59,16 +60,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data.user != local) {
             // creamos una clase que identifique el mensaje como de otra persona
             li.className = 'client-chat'
-        }  
+        }
         else {
-            // sino creamos otra clase que identifique el mensaje como propio 
+            // sino creamos otra clase que identifique el mensaje como propio
             li.className = 'my-chat'
         }
-            
+
         li.innerHTML = `<b>${data.user}:</b> ${data.mensaje} --- ${data.tiempo} `;
         document.querySelector('#tasks').append(li);
         // agrega animación por cada chat enviado por otra persona
-        $(".chats").animate({ scrollTop: $('.chats').prop("scrollHeight")}, 600);
+        $(".chats").animate({ scrollTop: $('.chats').prop("scrollHeight")}, 800);
     });
 
-});   
+});

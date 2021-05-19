@@ -4,15 +4,14 @@ from collections import deque
 from time import localtime, asctime
 
 from flask import Flask, jsonify, session, render_template, redirect, request, url_for
-from flask_socketio import SocketIO, emit, send, join_room, leave_room
+from flask_socketio import SocketIO, emit, join_room
 from flask_session import Session
 
 from helpers import login_required
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = 'secret'
-app.config['SESSION_TYPE'] = 'filesystem'
-
+app.config["SECRET_KEY"] = "secret"
+app.config['SESSION_TYPE'] = "filesystem"
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 users = []
@@ -50,7 +49,7 @@ def login():
 @app.route("/logout")
 def logout():
     """Log user out"""
-    usuario = session['username']
+    usuario = session.get('username')
     # Forget any user_id
     session.clear()
 
@@ -90,12 +89,16 @@ def canal(canal):
 def on_join(data):
     username = data['username']
     room = session.get('canal')
-    print("_---------------entra")
+    print("_-------------joined---------------")
+    msg= username + " ha entrado a la sala de chat"
     join_room(room)
-    emit('joined', {
+    emit('joined',
+    {
         "canal": room,
-        "mensaje": username + " ha entrado a la sala de chat"},
-        room=room)
+        "mensaje":msg
+
+    },
+        room=room) #send menssage only in the actual room
 
 
 @socketio.on("submit mensaje")
